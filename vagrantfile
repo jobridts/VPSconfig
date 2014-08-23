@@ -67,9 +67,10 @@ Vagrant.configure("2") do |config|
     }
   end
  
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "ansible/playbook.yml"
-  end
+	config.vm.provision :shell do |sh|
+		sh.path = "ansible_on_box.sh"
+		sh.args = "./ansible ansible/playbook.yml ansible/hosts"
+	end
  
  
 end
