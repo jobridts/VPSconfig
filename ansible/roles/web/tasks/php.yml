@@ -1,0 +1,3 @@
+---
+- name: Install MySQL extension for PHP
+  apt: name=php5-mysql state=present

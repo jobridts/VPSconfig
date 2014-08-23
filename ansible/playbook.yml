@@ -2,5 +2,6 @@
 ---
 - hosts: all
   roles:
-    - webserver
+    - common
+    - web
     - database
