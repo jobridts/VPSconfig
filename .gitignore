@@ -1,3 +1,6 @@
+# manual added#
+*.sublime-workspace
+
 # Created by http://www.gitignore.io
 
 ### Vagrant ###
