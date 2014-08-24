@@ -15,3 +15,6 @@ fi
 
 # update the hosts file
 cp /vagrant/ansible/hosts /etc/ansible/hosts
+
+# install roles from ansible-galaxy
+ansible-galaxy install --force --role-file /vagrant/ansible/galaxy-roles
