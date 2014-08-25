@@ -1,4 +1,3 @@
-# playbook.yml
 ---
 - hosts: all
   roles:
@@ -6,3 +5,9 @@
     - web
     - database
     - kosssi.composer
+    - phpmyadmin
+
+  handlers:
+    - include: handlers/main.yml
+  vars:
+    - include: vars/main.yml

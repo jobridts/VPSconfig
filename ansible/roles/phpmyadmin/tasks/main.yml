@@ -1,0 +1,15 @@
+---
+- name: Install phpmyadmin
+  apt: name=phpmyadmin state=present
+
+- name: configure phpmyadmin
+  debconf:
+    name=phpmyadmin
+    question={{ item.question }}
+    value={{ item.value }}
+    vtype={{ item.type }}
+  with_items:
+    # Reinstall database for phpmyadmin?
+    - { question: 'dbconfig-reinstall', value: 'false', type: 'boolean'}
+    # Web server to reconfigure automatically
+    - { question: 'reconfigure-webserver', value: 'apache2', type: 'multiselect'}
