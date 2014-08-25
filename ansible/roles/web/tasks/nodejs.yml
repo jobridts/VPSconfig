@@ -1,0 +1,8 @@
+---
+- name: Add node.js APT repository
+  apt_repository: repo='ppa:chris-lea/node.js' state=present update_cache=yes
+
+- name: Install node.js and npm
+  apt: name={{ item }} state=present
+  with_items:
+    - nodejs # nodejs from chris-lea's ppa includes npm
