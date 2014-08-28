@@ -1,0 +1,38 @@
+upstream supervisor {
+      server      unix:{{ supervisor_socket }} fail_timeout=0;
+}
+
+server {
+      {#
+      listen 443 ssl;
+      ssl on; #}
+      listen 80;
+      keepalive_timeout 70;
+
+      server_name supervisor.192.168.99.10.xip.io;
+      root /var/www/;
+
+      access_log  /var/log/nginx/supervisor.access.log;
+      error_log /var/log/nginx/supervisor.error.log;
+
+      {#ssl_certificate     <ssl certificate for your site>;
+      ssl_certificate_key <ssl certificate key for your site>;#}
+
+      location /sitestatic/ {
+              autoindex on;
+      }
+
+      location /media/ {
+              autoindex on;
+      }
+
+      location / {
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header Host $http_host;
+              proxy_redirect off;
+              {#
+              proxy_set_header X-Forwarded-Protocol ssl;
+              #}
+              proxy_pass http://supervisor;
+      }
+}

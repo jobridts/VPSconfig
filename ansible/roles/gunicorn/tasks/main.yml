@@ -1,0 +1,3 @@
+---
+- name: Install gunicorn
+  apt: name=gunicorn state=present

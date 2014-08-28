@@ -1,0 +1,33 @@
+---
+- name: install supervisor
+  apt: name=supervisor state=present
+
+- name: make supervisor run on a unix socket
+  ini_file: 
+    dest=/etc/supervisor/supervisord.conf
+    section=unix_http_server
+    option=file
+    value={{ supervisor_socket }}
+    state=present
+- name: make supervisor run it's socket as www-data
+  ini_file: 
+    dest=/etc/supervisor/supervisord.conf
+    section=unix_http_server
+    option=chown
+    value=www-data:www-data
+    state=present
+
+- name: make sure supervisor is running
+  service: name=supervisor state=running enabled=yes
+
+- name: install nginx config
+  template: src=nginx.j2 dest=/etc/nginx/sites-available/supervisor
+  notify: nginx-reload
+
+- name: Enable site
+  file:
+    path=/etc/nginx/sites-enabled/supervisor 
+    src=/etc/nginx/sites-available/supervisor
+    state=link
+  notify: nginx-restart
+

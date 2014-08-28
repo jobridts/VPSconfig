@@ -8,3 +8,11 @@
   service: name=nginx state=restarted
 - name: nginx-restart
   service: name=nginx state=restarted
+
+- name: supervisor-reload
+  service: name=supervisor state=restarted
+- name: supervisor-restart
+  service: name=supervisor state=restarted
+
+- name: modoboa-restart
+  supervisorctl: name=modoboa state=restarted

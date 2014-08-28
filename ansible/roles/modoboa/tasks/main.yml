@@ -1,0 +1,86 @@
+---
+- name: install modoboa dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - python-dev
+    - libxml2-dev
+    - zlib1g-dev
+    - python-pip
+    - libcairo2-dev
+    - libpango1.0-dev
+    - librrd-dev
+    - python-rrdtool
+    - libxslt1-dev
+
+- name: Install mysql-python
+  apt: name=python-mysqldb state=present
+
+- name: Install modoboa via pip
+  pip: name=modoboa state=present virtualenv=/usr/local/lib/virtualenvs/modoboa
+
+- name: Create modoboa database
+  mysql_db: 
+    name={{ item }}
+    state=present
+    login_user=root
+    login_password=root
+    login_host={{ modoboa_mysql_host }}
+    login_port={{ modoboa_mysql_port }}
+  with_items:
+    - modoboa
+    - modoboa_amavis
+
+- name: Create modoboa user
+  mysql_user:
+    name={{ modoboa_mysql_user }}
+    password={{ modoboa_mysql_password }}
+    state=present
+    priv=modoboa.*:ALL/modoboa_amavi.*:ALL
+    login_user=root
+    login_password=root
+    login_host={{ modoboa_mysql_host }}
+    login_port={{ modoboa_mysql_port }}
+
+- name: make sure there is a /srv/python directory
+  file: path=/srv/python state=directory
+
+- name: Configure modoboa
+  command: /usr/local/lib/virtualenvs/modoboa/bin/modoboa-admin.py deploy modoboa_example 
+    --syncdb 
+    --collectstatic 
+    --with-amavis 
+    --dburl mysql://{{ modoboa_mysql_user }}:{{ modoboa_mysql_password }}@{{ modoboa_mysql_host}}:{{ modoboa_mysql_port }}/modoboa
+    --amavis_dburl mysql://{{ modoboa_mysql_user }}:{{ modoboa_mysql_password }}@{{ modoboa_mysql_host}}:{{ modoboa_mysql_port }}/modoboa_amavis
+    --domain {{ ansible_hostname }}
+    chdir=/srv/python/
+    creates=/srv/python/modoboa_example
+
+- name: Copy gunicorn config file
+  template:
+    src=gunicorn.conf.py.j2
+    dest=/srv/python/modoboa_example/gunicorn.conf.py
+
+- name: make sure the gunicorn socket directory is writable
+  file:
+    path=/var/run/gunicorn
+    state=directory
+    owner=www-data
+    group=www-data
+
+- name: install supervisor config
+  copy: src=supervisor.conf dest=/etc/supervisor/conf.d/modoboa.conf
+  notify: supervisor-restart
+
+- name: run modoboa
+  supervisorctl: name=modoboa state=started
+
+- name: install nginx config
+  template: src=nginx.j2 dest=/etc/nginx/sites-available/modoboa
+  notify: nginx-reload
+
+- name: Enable site
+  file:
+    path=/etc/nginx/sites-enabled/modoboa 
+    src=/etc/nginx/sites-available/modoboa
+    state=link
+  notify: nginx-restart
