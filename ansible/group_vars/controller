@@ -1,0 +1,4 @@
+---
+# add roles as "-  { name: 'XXXXX', version: 'X.X.X' }"
+ansible_galaxy_roles:
+  - { name: 'kosssi.composer', version: '1.0.3' }

@@ -1,12 +1,15 @@
 ---
-- hosts: all
+- hosts: controller
+  roles:
+    - ansible_galaxy
+
+- hosts: vagrant
   roles:
     - common
     - web
     - database
     - kosssi.composer
     - phpmyadmin
-
   handlers:
     - include: handlers/main.yml
   vars:

@@ -1,2 +1,5 @@
-[Iocal]
+[controller]
+127.0.0.1
+
+[vagrant]
 127.0.0.1
