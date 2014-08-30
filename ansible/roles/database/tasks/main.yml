@@ -7,3 +7,18 @@
 
 - name: Install python Mysql package #required for mysql_db tasks
   apt: name=python-mysqldb state=present
+
+- name: set root user password forr all root accounts
+  mysql_user:
+    name=root
+    password={{ mysql_root_password }}
+    host={{ item }}
+    state=present
+    check_implicit_admin=yes
+    login_user=root
+    login_password={{ mysql_root_password }}
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost # localhost should be the last one
