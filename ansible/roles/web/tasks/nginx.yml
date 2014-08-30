@@ -1,0 +1,15 @@
+---
+- name: install nginx
+  apt: name=nginx state=present
+- name: copy config
+  copy: src=bridts dest=/etc/nginx/sites-available/bridts
+- name: start nginx
+  service: name=nginx state=running enabled=yes
+
+- name: make symlink
+  shell: ln -s -f /etc/nginx/sites-available/bridts /etc/nginx/sites-enabled/bridts 
+
+- name: delete default config
+  shell: rm -f /etc/nginx/sites-enabled/default
+- name: restart nginx
+  service: name=nginx state=restarted
