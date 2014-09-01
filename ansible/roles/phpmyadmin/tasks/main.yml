@@ -12,4 +12,4 @@
     # Reinstall database for phpmyadmin?
     - { question: 'dbconfig-reinstall', value: 'false', type: 'boolean'}
     # Web server to reconfigure automatically
-    - { question: 'reconfigure-webserver', value: 'apache2', type: 'multiselect'}
+    - { question: 'reconfigure-webserver', value: '{{ phpmyadmin_web_server}}', type: 'multiselect'}

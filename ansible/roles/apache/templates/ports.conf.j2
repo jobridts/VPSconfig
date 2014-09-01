@@ -1,0 +1,5 @@
+{% for host in apache_hosts %}
+
+Listen {{ host.host }}:{{ host.port }}
+
+{% endfor %}

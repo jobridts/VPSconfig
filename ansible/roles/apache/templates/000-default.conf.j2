@@ -1,0 +1,13 @@
+{% for host in apache_hosts %}
+    {% if not host.ssl %}
+<VirtualHost {{ host.host }}:{{ host.port }}>
+    ServerName {{ host.host }}
+
+    ServerAdmin {{ apache_server_admin }}
+    DocumentRoot {{ apache_document_root }}/default
+
+    ErrorLog {{ apache_log_dir }}/default.error.log
+    CustomLog {{ apache_log_dir }}/default.access.log combined
+</VirtualHost>
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,7 @@
+---
+apache_hosts:
+  - { host: '*', port: '80', ssl: 'no' }
+  - { host: '*', port: '443', ssl: 'yes' }
+apache_server_admin: admin@bridts.be
+apache_document_root: /var/www
+apache_log_dir: /var/log/apache2
