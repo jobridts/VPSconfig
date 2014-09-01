@@ -3,3 +3,8 @@
   service: name=apache2 state=reloaded
 - name: apache-restart
   service: name=apache2 state=restarted
+
+- name: nginx-reload
+  service: name=nginx state=restarted
+- name: nginx-restart
+  service: name=nginx state=restarted
