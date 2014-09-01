@@ -1,0 +1,18 @@
+---
+- name: Get the currently installed roles and versions
+  command: ansible-galaxy
+    list {{ item.name }}
+    --roles-path {{ ansible_galaxy_roles_path }}
+  with_items: ansible_galaxy_roles
+  register: ansible_galaxy_versions
+  changed_when: no
+
+- name: Install ansible galaxy roles
+  command: ansible-galaxy
+    install {{ item.0.name }},v{{ item.0.version }}
+    --force
+    --roles-path {{ ansible_galaxy_roles_path }}
+  with_together: 
+    - ansible_galaxy_roles
+    - ansible_galaxy_versions.results
+  when: item.0.version not in item.1.stdout

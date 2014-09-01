@@ -20,4 +20,4 @@ Our vagrantfile supports [vagrant-cachier](http://fgrehm.viewdocs.io/vagrant-cac
 Working with ansible
 --------------------
 ### Ansible Galaxy ###
-instead of doing `ansible galaxy install {{ name }}` add `{{ name }}` to the `ansible/galaxy-roles`-file. The install ansible shell script will install the roles on the Vagrant machine. If you want to install to roles on your local machine, you can run `ansible-galaxy install -r ansible/galaxy-roles`
+instead of doing `ansible galaxy install {{ name }},v{{ version }}` add it to ` to the `ansible/group_vars/controller`-file. The ansible playbook will install the roles on all the controller machines from the inventory (defined in `ansible/hosts`).
