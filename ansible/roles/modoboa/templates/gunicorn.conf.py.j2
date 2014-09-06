@@ -1,5 +1,5 @@
 backlog = {{ modoboa_gunicorn_backlog }}
-bind = "{{ modoboa_gunicorn_socket }}"
+bind = "unix:{{ modoboa_gunicorn_socket }}"
 pidfile = "{{ modoboa_gunicorn_pid }}"
 {# Upstart will start/stop/daemonize #}
 daemon = False

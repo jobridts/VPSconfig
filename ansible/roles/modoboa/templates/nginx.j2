@@ -1,38 +1,38 @@
 upstream modoboa {
-      server      unix:{{ modoboa_gunicorn_socket }}fail_timeout=0;
+    server unix:{{ modoboa_gunicorn_socket }} fail_timeout=0;
 }
 
 server {
-      {#
-      listen 443 ssl;
-      ssl on; #}
-      listen 80;
-      keepalive_timeout 70;
+    {#
+    listen 443 ssl;
+    ssl on; #}
+    listen 80;
+    keepalive_timeout 70;
 
-      server_name modoboa.192.168.99.10.xip.io;
-      root /srv/python/modoboa_example/modoboa_example;
+    server_name modoboa.192.168.99.10.xip.io;
+    root /srv/python/modoboa_example/modoboa_example;
 
-      access_log  /var/log/nginx/modoboa.access.log;
-      error_log /var/log/nginx/modoboa.error.log;
+    access_log  /var/log/nginx/modoboa.access.log;
+    error_log /var/log/nginx/modoboa.error.log;
 
-      {#ssl_certificate     <ssl certificate for your site>;
-      ssl_certificate_key <ssl certificate key for your site>;#}
+    {#ssl_certificate     <ssl certificate for your site>;
+    ssl_certificate_key <ssl certificate key for your site>;#}
 
-      location /sitestatic/ {
-              autoindex on;
-      }
+    location /sitestatic/ {
+        autoindex on;
+    }
 
-      location /media/ {
-              autoindex on;
-      }
+    location /media/ {
+        autoindex on;
+    }
 
-      location / {
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header Host $http_host;
-              proxy_redirect off;
-              {#
-              proxy_set_header X-Forwarded-Protocol ssl;
-              #}
-              proxy_pass http://modoboa;
-      }
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        {#
+        proxy_set_header X-Forwarded-Protocol ssl;
+        #}
+        proxy_pass http://modoboa;
+    }
 }
