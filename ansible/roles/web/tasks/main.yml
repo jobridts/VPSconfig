@@ -1,6 +1,5 @@
 ---
 - include: git.yml
 - include: php.yml
-- include: apache.yml
 - include: nginx.yml
 - include: nodejs.yml
