@@ -1,0 +1,9 @@
+backlog = {{ modoboa_gunicorn_backlog }}
+bind = "{{ modoboa_gunicorn_socket }}"
+pidfile = "{{ modoboa_gunicorn_pid }}"
+{# Upstart will start/stop/daemonize #}
+daemon = False
+debug = True
+workers = {{ modoboa_gunicorn_workers}}
+logfile = "{{ modoboa_gunicorn_log}}"
+loglevel = "info"

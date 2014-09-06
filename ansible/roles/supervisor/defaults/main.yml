@@ -1,0 +1,2 @@
+---
+supervisor_socket: /var/run/supervisor.sock

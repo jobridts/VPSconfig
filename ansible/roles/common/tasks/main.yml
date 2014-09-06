@@ -4,3 +4,9 @@
   with_items:
     - htop
     - vim
+
+- name: install dependencies of ansible modules
+  apt: name={{ item }} state=present
+  with_items:
+    - python-pip # pip module
+    - python-mysqldb # mysql_*

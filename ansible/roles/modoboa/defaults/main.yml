@@ -1,0 +1,11 @@
+---
+modoboa_mysql_user: modoboa
+modoboa_mysql_password: modoboa
+modoboa_mysql_host: localhost
+modoboa_mysql_port: 3306
+
+modoboa_gunicorn_backlog: 2048
+modoboa_gunicorn_socket: unix:/var/run/gunicorn/modoboa.sock
+modoboa_gunicorn_pid: /var/run/gunicorn/modoboa.pid
+modoboa_gunicorn_workers: 2
+modoboa_gunicorn_log: /var/log/gunicorn/modoboa.log

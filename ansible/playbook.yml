@@ -1,7 +1,8 @@
 ---
 - hosts: controller
   roles:
-    - ansible_galaxy
+   - ansible_galaxy
+  gather_facts: no
 
 - hosts: vagrant
   roles:
@@ -9,9 +10,8 @@
     - apache
     - web
     - database
+    - modoboa
     - kosssi.composer
     - phpmyadmin
   handlers:
     - include: handlers/main.yml
-  vars:
-    - include: vars/main.yml
