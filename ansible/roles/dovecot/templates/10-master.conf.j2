@@ -1,0 +1,19 @@
+
+service lmtp {
+  unix_listener {{ dovecot_lmtp_listener}} {
+    mode = {{ dovecot_lmtp_mode }}
+    user = {{ dovecot_lmtp_user }}
+    group = {{ dovecot_lmtp_group }}
+
+  }
+
+
+service dict {
+  # If dict proxy is used, mail processes should have access to its socket.
+  # For example: mode=0660, group=vmail and global mail_access_groups=vmail
+  unix_listener dict {
+    mode = {{ dovecot_dict_mode }}
+    user = {{ dovecot_dict_user }}
+    group = {{ dovecot_dict_group }}
+  }
+}

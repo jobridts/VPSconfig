@@ -1,0 +1,42 @@
+---
+- name: Install dependencies for pip packages
+  apt: name={{ item }} state=present
+  with_items:
+    - libmysqlclient-dev
+
+- name: install pip packages
+  pip: name={{ item }} state=present
+  with_items:
+    - gunicorn
+    - mysql-python
+
+- name: Copy gunicorn config file
+  template:
+    src=gunicorn.conf.py.j2
+    dest=/srv/python/{{ modoboa_name }}/gunicorn.conf.py
+  notify: modoboa-restart
+
+- name: make sure the gunicorn socket directory is writable
+  file:
+    path=/var/run/gunicorn
+    state=directory
+    owner=www-data
+    group=www-data
+
+- name: install supervisor config
+  template: src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/{{ modoboa_name }}.conf
+  notify: supervisor-restart
+
+- name: run modoboa
+  supervisorctl: name={{ modoboa_name }} state=started
+
+- name: install nginx config
+  template: src=nginx.j2 dest=/etc/nginx/sites-available/{{ modoboa_name }}
+  notify: nginx-reload
+
+- name: Enable site
+  file:
+    path=/etc/nginx/sites-enabled/{{ modoboa_name }} 
+    src=/etc/nginx/sites-available/{{ modoboa_name }}
+    state=link
+  notify: nginx-restart

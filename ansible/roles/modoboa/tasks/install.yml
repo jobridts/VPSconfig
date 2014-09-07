@@ -1,0 +1,61 @@
+---
+- name: install modoboa dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - python-dev
+    - libxml2-dev
+    - zlib1g-dev
+    - python-pip
+    - libcairo2-dev
+    - libpango1.0-dev
+    - librrd-dev
+    - python-rrdtool
+    - libxslt1-dev
+    - libmysqlclient-dev
+
+- name: install pip packages
+  pip: name={{ item }} state=present
+  with_items:
+    - mysql-python
+    - modoboa
+
+- name: Create modoboa database
+  mysql_db: 
+    name={{ item }}
+    state=present
+    login_user=root
+    login_password={{ mysql_root_password }}
+    login_host={{ modoboa_mysql_host }}
+    login_port={{ modoboa_mysql_port }}
+  with_items:
+    - "{{ modoboa_mysql_database }}"
+    - modoboa_amavis
+
+- name: Create modoboa user
+  mysql_user:
+    name={{ modoboa_mysql_user }}
+    password={{ modoboa_mysql_password }}
+    state=present
+    priv={{ modoboa_mysql_database }}.*:ALL/modoboa_amavis.*:ALL
+    login_user=root
+    login_password={{ mysql_root_password }}
+    login_host={{ modoboa_mysql_host }}
+    login_port={{ modoboa_mysql_port }}
+
+- name: make sure there is a /srv/python directory
+  file: path=/srv/python state=directory
+
+- name: Configure modoboa
+  command: modoboa-admin.py deploy {{ modoboa_name }} 
+    --syncdb 
+    --collectstatic 
+    --with-amavis 
+    --dburl mysql://{{ modoboa_mysql_user }}:{{ modoboa_mysql_password }}@{{ modoboa_mysql_host }}:{{ modoboa_mysql_port }}/{{ modoboa_mysql_database }}
+    --amavis_dburl mysql://{{ modoboa_mysql_user }}:{{ modoboa_mysql_password }}@{{ modoboa_mysql_host}}:{{ modoboa_mysql_port }}/modoboa_amavis
+    --domain {{ ansible_hostname }}
+    chdir=/srv/python/
+    creates=/srv/python/{{ modoboa_name }}
+
+- name: update settings.py
+  lineinfile: dest=/srv/python/{{ modoboa_name }}/{{ modoboa_name }}/settings.py regexp='^DEBUG = ' line='DEBUG = True'
+  notify: modoboa-restart

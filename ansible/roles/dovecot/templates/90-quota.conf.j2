@@ -1,0 +1,21 @@
+##
+## Quota configuration.
+##
+
+# Note that you also have to enable quota plugin in mail_plugins setting.
+# <doc/wiki/Quota.txt>
+
+##
+## Quota backends
+##
+
+{# Multiple backends are supported:
+#   dirsize: Find and sum all the files found from mail directory.
+#            Extremely SLOW with Maildir. It'll eat your CPU and disk I/O. #}
+#   dict: Keep quota stored in dictionary (eg. SQL)
+{#   maildir: Maildir++ quota
+#   fs: Read-only support for filesystem quota #}
+
+plugin {
+  quota = dict:User quota::proxy::quota
+}

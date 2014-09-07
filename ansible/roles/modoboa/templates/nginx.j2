@@ -1,4 +1,4 @@
-upstream modoboa {
+upstream {{ modoboa_name }} {
     server unix:{{ modoboa_gunicorn_socket }} fail_timeout=0;
 }
 
@@ -9,11 +9,11 @@ server {
     listen 80;
     keepalive_timeout 70;
 
-    server_name modoboa.192.168.99.10.xip.io;
-    root /srv/python/modoboa_example/modoboa_example;
+    server_name {{ modoboa_name }}.{{ main_domain }};
+    root /srv/python/{{ modoboa_name }}/{{ modoboa_name }};
 
-    access_log  /var/log/nginx/modoboa.access.log;
-    error_log /var/log/nginx/modoboa.error.log;
+    access_log  /var/log/nginx/{{ modoboa_name }}.access.log;
+    error_log /var/log/nginx/{{ modoboa_name }}.error.log;
 
     {#ssl_certificate     <ssl certificate for your site>;
     ssl_certificate_key <ssl certificate key for your site>;#}
@@ -33,6 +33,6 @@ server {
         {#
         proxy_set_header X-Forwarded-Protocol ssl;
         #}
-        proxy_pass http://modoboa;
+        proxy_pass http://{{ modoboa_name }};
     }
 }

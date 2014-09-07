@@ -5,14 +5,24 @@
   service: name=apache2 state=restarted
 
 - name: nginx-reload
-  service: name=nginx state=restarted
+  service: name=nginx state=reloaded
 - name: nginx-restart
   service: name=nginx state=restarted
 
 - name: supervisor-reload
-  service: name=supervisor state=restarted
+  service: name=supervisor state=reloaded
 - name: supervisor-restart
   service: name=supervisor state=restarted
 
 - name: modoboa-restart
-  supervisorctl: name=modoboa state=restarted
+  supervisorctl: name={{ modoboa_name | default('modoboa') }} state=restarted
+
+- name: postfix-reload
+  service: name=postfix state=reloaded
+- name: postfix-restart
+  service: name=postfix state=restarted
+
+- name: dovecot-reload
+  service: name=dovecot state=reloaded
+- name: dovecot-restart
+  service: name=dovecot state=restarted

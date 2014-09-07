@@ -1,0 +1,7 @@
+[program:{{ modoboa_name }}]
+command=gunicorn {{ modoboa_name }}.wsgi:application --config /srv/python/{{ modoboa_name }}/gunicorn.conf.py
+directory=/srv/python/{{ modoboa_name }}
+user=www-data
+autostart=true
+autorestart=true
+redirect_stderr=true

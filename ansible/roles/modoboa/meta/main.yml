@@ -1,4 +1,24 @@
 ---
 dependencies:
- - { role: supervisor }
- - { role: gunicorn }
+  - { role: supervisor }
+  - role: postfix
+    postfix_vmail_domains: mysql:/etc/postfix/sql-domains.cf
+    postfix_vmail_maps: 
+    postfix_valias_domains: mysql:/etc/postfix/sql-domain-aliases.cf
+    postfix_valias_maps: >
+      mysql:/etc/postfix/sql-aliases.cf,
+      mysql:/etc/postfix/sql-domain-aliases-mailboxes.cf,
+      mysql:/etc/postfix/sql-mailboxes-self-aliases.cf,
+      mysql:/etc/postfix/sql-catchall-aliases.cf
+    postfix_smtpd_recipients: mysql:/etc/postfix/sql-maintain.cf
+  - role: dovecot
+    dovecot_lmtp_listener: /var/spool/postfix/private/dovecot-lmtp
+    dovecot_lmtp_mode: 0600
+    dovecot_lmtp_user: postfix
+    dovecot_lmtp_group: postfix
+    dovecot_dict_mode: 0600
+    dovecot_dict_user: "{{ postfix_vmail_user }}"
+    dovecot_dict_group: "{{ postfix_vmail_group }}"
+    dovecot_mysql_host: "{{ modoboa_mysql_host }}"
+    dovecot_mysql_database: "{{ modoboa_mysql_database }}"
+    dovecot_quota_table: admin_quota

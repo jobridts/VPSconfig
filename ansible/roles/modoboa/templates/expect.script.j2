@@ -1,0 +1,16 @@
+#! /usr/bin/expect
+spawn modoboa-admin.py postfix_maps --dbtype mysql /etc/postfix/
+
+expect "Database host"
+send "{{ modoboa_mysql_host }}\r"
+
+expect "Database name"
+send "{{ modoboa_mysql_database }}\r"
+
+expect "Username"
+send "{{ modoboa_mysql_user }}\r"
+
+expect "Password"
+send "{{ modoboa_mysql_password }}\r"
+
+expect eof

@@ -9,7 +9,7 @@ server {
       listen 80;
       keepalive_timeout 70;
 
-      server_name supervisor.192.168.99.10.xip.io;
+      server_name supervisor.{{ main_domain }};
       root /var/www/;
 
       access_log  /var/log/nginx/supervisor.access.log;

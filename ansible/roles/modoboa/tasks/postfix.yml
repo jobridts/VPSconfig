@@ -1,0 +1,11 @@
+---
+- name: Make sure expect is installed
+  apt: name=expect state=present
+
+- name: copy the expect script
+  template: src=expect.script.j2 dest=/tmp/expect.script
+  register: expect_copy_output
+
+- name: Let postfix use the modoboa database
+  command: expect /tmp/expect.script
+  when: expect_copy_output.changed
