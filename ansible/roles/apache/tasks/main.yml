@@ -24,11 +24,8 @@
   notify: apache-reload
 
 - name: enable default sites
-  file: 
-    path=/etc/apache2/sites-enabled/{{ item }} 
-    src=../sites-available/{{ item }}
-    state=link
+  command: a2ensite {{ item }} creates=/etc/apache2/sites-enabled/{{ item }}.conf
   with_items:
-    - 000-default.conf
-    - 000-default-ssl.conf
+    - 000-default
+    - 000-default-ssl
   notify: apache-reload

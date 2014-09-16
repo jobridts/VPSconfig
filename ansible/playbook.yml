@@ -11,7 +11,6 @@
     - web
     - database
     - modoboa
-    - kosssi.composer
     - phpmyadmin
   handlers:
     - include: handlers/main.yml
