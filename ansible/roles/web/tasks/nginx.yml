@@ -12,7 +12,7 @@
 - name: make symlink
   file:
     path=/etc/nginx/sites-enabled/bridts 
-    src=../sites-available/bridts
+    src=/etc/nginx/sites-available/bridts
     state=link
   notify: nginx-reload
 

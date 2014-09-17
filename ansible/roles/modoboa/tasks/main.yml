@@ -16,7 +16,7 @@
   apt: name=python-mysqldb state=present
 
 - name: Install modoboa via pip
-  pip: name=modoboa state=present virtualenv=/usr/local/lib/virtualenvs/modoboa
+  pip: name=modoboa state=present
 
 - name: Create modoboa database
   mysql_db: 
@@ -45,7 +45,7 @@
   file: path=/srv/python state=directory
 
 - name: Configure modoboa
-  command: /usr/local/lib/virtualenvs/modoboa/bin/modoboa-admin.py deploy modoboa_example 
+  command: modoboa-admin.py deploy modoboa_example 
     --syncdb 
     --collectstatic 
     --with-amavis 
