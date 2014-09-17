@@ -1,0 +1,12 @@
+---
+- include: shared.yml
+- include: web.yml
+
+- name: wait for web instances to listen on port:22
+  wait_for:
+    state=started
+    host={{ item.public_dns_name }}
+    port=22
+  with_items: ec2_web.instances
+  when: ec2_web.changed
+

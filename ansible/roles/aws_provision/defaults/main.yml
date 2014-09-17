@@ -1,0 +1,66 @@
+---
+aws_web_instance_type: "t1.micro"
+# find images on http://uec-images.ubuntu.com/trusty/current/
+aws_image: "ami-d44c97a3"
+aws_region: "eu-west-1"
+aws_zone: "eu-west-1a"
+
+aws_prefix: vps
+aws_allowed_ip: 127.0.0.1/32
+
+##
+# Web variables
+##
+aws_web_ingress_rules:
+  # allow ssh access from your ip address
+  - proto: tcp
+    from_port: 22
+    to_port: 22
+    cidr_ip: "{{ aws_allowed_ip }}"
+  # allow http access from anywhere
+  - proto: tcp
+    from_port: 80
+    to_port: 80
+    cidr_ip: 0.0.0.0/0
+  # allow https access from anywhere
+  - proto: tcp
+    from_port: 443
+    to_port: 443
+    cidr_ip: 0.0.0.0/0
+  # allow pop3 access
+  - proto: tcp
+    from_port: 110
+    to_port: 110
+    cidr_ip: 0.0.0.0/0
+  # allow pop3s access
+  - proto: tcp
+    from_port: 995
+    to_port: 995
+    cidr_ip: 0.0.0.0/0
+  # allow imap access
+  - proto: tcp
+    from_port: 143
+    to_port: 143
+    cidr_ip: 0.0.0.0/0
+  # allow imaps access
+  - proto: tcp
+    from_port: 993
+    to_port: 993
+    cidr_ip: 0.0.0.0/0
+  # allow smtp access
+  - proto: tcp
+    from_port: 25
+    to_port: 25
+    cidr_ip: 0.0.0.0/0
+  # allow smtps access
+  - proto: tcp
+    from_port: 465
+    to_port: 465
+    cidr_ip: 0.0.0.0/0
+
+aws_web_egress_rules:
+  # allow all outgoing traffic
+  - proto: all
+    cidr_ip: 0.0.0.0/0
+
+aws_web_count: 1

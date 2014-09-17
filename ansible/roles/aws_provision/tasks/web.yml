@@ -1,0 +1,25 @@
+---
+- name: Create web security group
+  tags: aws, security
+  local_action:
+    module: ec2_group
+    region: "{{ aws_region }}"
+    name: "{{ aws_prefix }}-webserver"
+    description: security group for {{ aws_prefix }} webserver
+    rules: "{{ aws_web_ingress_rules }}"
+    rules_egress: "{{ aws_web_egress_rules }}"
+
+- name: Launch web instances
+  tags: aws, ec2
+  ec2:
+    region: "{{ aws_region }}"
+    zone: "{{ aws_zone }}"
+    key_name: "{{ aws_prefix }}-{{ aws_region }}-key"
+    instance_type: "{{ aws_web_instance_type }}"
+    image: "{{ aws_image }}"
+    wait: yes
+    group: "{{ aws_prefix }}-webserver"
+    instance_tags: { "Name": "{{ aws_prefix }}-web", "class": "web", "os": "ubuntu" }
+    count_tag: { "class": "web" }
+    exact_count: "{{ aws_web_count }}"
+  register: ec2_web

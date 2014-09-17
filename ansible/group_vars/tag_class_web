@@ -1,0 +1,5 @@
+---
+apache_hosts:
+  - { host: 'localhost', port: '8080', ssl: 'no' }
+  - { host: 'localhost', port: '8443', ssl: 'yes' }
+timezone: Europe/Dublin

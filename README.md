@@ -21,3 +21,11 @@ Working with ansible
 --------------------
 ### Ansible Galaxy ###
 instead of doing `ansible galaxy install {{ name }},v{{ version }}` add it to ` to the `ansible/group_vars/controller`-file. The ansible playbook will install the roles on all the controller machines from the inventory (defined in `ansible/hosts`).
+
+Working on AWS
+---------------
+(Warning:this will cost you money)
+
+- make sure AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are set (you can add a sript called setupenv.sh, it will not be tracked by git).
+- run `ansible-playblook -i aws-provision provision.yml`
+- run ansible-playblook -i ec2.py playbook.yml`

@@ -4,7 +4,7 @@
    - ansible_galaxy
   gather_facts: no
 
-- hosts: vagrant
+- hosts: vagrant:tag_class_web
   sudo: yes
   roles:
     - common
