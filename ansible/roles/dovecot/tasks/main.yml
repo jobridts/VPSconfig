@@ -1,0 +1,58 @@
+---
+- name: Install dovecot
+  apt: name={{ item }} state=present
+  with_items:
+    - dovecot-imapd
+    - dovecot-pop3d
+    - dovecot-mysql
+    - dovecot-lmtpd
+    - dovecot-sieve
+    - dovecot-managesieved
+
+- name: Run dovecot
+  service: name=dovecot state=running enabled=yes
+
+- name: Udate the configuration in /etc/dovecot/
+  template:
+    src={{ item }}.j2
+    dest=/etc/dovecot/{{ item }}
+  with_items:
+    - dovecot.conf
+    - dovecot-dict-sql.conf.ext
+  notify: dovecot-restart
+
+- name: Udate the configuration in /etc/dovecot/conf.d
+  template:
+    src={{ item }}.j2
+    dest=/etc/dovecot/conf.d/{{ item }}
+  with_items:
+    - 10-mail.conf
+    - 10-master.conf
+    - 15-lda.conf
+    - 20-imap.conf
+    - 20-lpmt.conf
+    - 20-managesieve.conf
+    - 90-quota.conf
+    - 90-sieve.conf
+  notify: dovecot-restart
+
+- name: Create dovecot database
+  mysql_db: 
+    name={{ dovecot_mysql_database }}
+    state=present
+    login_user=root
+    login_password={{ mysql_root_password }}
+    login_host={{ dovecot_mysql_host }}
+  register: dovecot_database_created
+
+- name: Create dovecot database user
+  mysql_user:
+    name={{ dovecot_mysql_user }}
+    password={{ dovecot_mysql_password }}
+    state=present
+    priv={{dovecot_mysql_database }}.*:ALL
+    login_user=root
+    login_password={{ mysql_root_password }}
+    login_host={{ dovecot_mysql_host }}
+
+# TODO: create database, but somehow check if we need to do this, or it will be done later

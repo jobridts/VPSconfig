@@ -1,0 +1,28 @@
+##
+## IMAP specific settings
+##
+
+# Workarounds for various client bugs:
+{#   delay-newmail:
+#     Send EXISTS/RECENT new mail notifications only when replying to NOOP
+#     and CHECK commands. Some clients ignore them otherwise, for example OSX
+#     Mail (<v2.1). Outlook Express breaks more badly though, without this it
+#     may show user "Message no longer in server" errors. Note that OE6 still
+#     breaks even with this workaround if synchronization is set to
+#     "Headers Only".
+#   tb-extra-mailbox-sep:
+#     Thunderbird gets somehow confused with LAYOUT=fs (mbox and dbox) and
+#     adds extra '/' suffixes to mailbox names. This option causes Dovecot to
+#     ignore the extra '/' instead of treating it as invalid mailbox name.
+#   tb-lsub-flags:
+#     Show \Noselect flags for LSUB replies with LAYOUT=fs (e.g. mbox).
+#     This makes Thunderbird realize they aren't selectable and show them
+#     greyed out, instead of only later giving "not selectable" popup error.
+#}
+# The list is space-separated.
+imap_client_workarounds = delay-newmail tb-extra-mailbox-sep tb-lsub-flags
+
+protocol imap {
+  # Space separated list of plugins to load (default is global mail_plugins).
+  mail_plugins = $mail_plugins imap_quota
+}

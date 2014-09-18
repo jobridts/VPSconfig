@@ -1,0 +1,12 @@
+---
+postfix_vmail_user: vmail
+postfix_vmail_group: vmail
+postfix_vmail_home: /srv/mail
+postfix_vmail_gid: 5000
+postfix_vmail_uid: 5000
+
+postfix_vmail_domains: /etc/postfix/vhosts
+postfix_vmail_maps: "hash:/etc/postfix/vmaps"
+postfix_valias_domains: 
+postfix_valias_maps:
+postfix_smtpd_recipients: 

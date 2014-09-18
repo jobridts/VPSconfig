@@ -9,6 +9,7 @@
     option=file
     value={{ supervisor_socket }}
     state=present
+
 - name: make supervisor run it's socket as www-data
   ini_file: 
     dest=/etc/supervisor/supervisord.conf
@@ -16,6 +17,7 @@
     option=chown
     value=www-data:www-data
     state=present
+  notify: supervisor-restart
 
 - name: make sure supervisor is running
   service: name=supervisor state=running enabled=yes

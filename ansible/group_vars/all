@@ -1,0 +1,5 @@
+---
+main_domain: demo.bridts.be
+mysql_root_password: root
+
+modoboa_name: mail

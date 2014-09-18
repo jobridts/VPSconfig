@@ -10,3 +10,9 @@
   with_items:
     - python-pip # pip module
     - python-mysqldb # mysql_*
+
+- name: install virtualenv
+  pip: name={{ item }} state=present
+  with_items:
+    - virtualenv
+    - virtualenvwrapper

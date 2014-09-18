@@ -1,4 +1,7 @@
 ---
+# can't be modoboa, because it will confilct with modoboa as a python module
+modoboa_name: mail_admin
+
 modoboa_mysql_database: modoboa
 modoboa_mysql_user: modoboa
 modoboa_mysql_password: modoboa
@@ -6,7 +9,9 @@ modoboa_mysql_host: localhost
 modoboa_mysql_port: 3306
 
 modoboa_gunicorn_backlog: 2048
-modoboa_gunicorn_socket: /var/run/gunicorn/modoboa.sock
-modoboa_gunicorn_pid: /var/run/gunicorn/modoboa.pid
+modoboa_gunicorn_socket: /var/run/gunicorn/{{ modoboa_name }}.sock
+modoboa_gunicorn_pid: /var/run/gunicorn/{{ modoboa_name }}.pid
 modoboa_gunicorn_workers: 2
-modoboa_gunicorn_log: /var/log/gunicorn/modoboa.log
+modoboa_gunicorn_log: /var/log/gunicorn/{{ modoboa_name }}.log
+
+modoboa_mailbox_storage: /srv/mail

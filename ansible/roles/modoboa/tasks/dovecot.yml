@@ -1,0 +1,16 @@
+---
+- name: Enable sql auth
+  lineinfile:
+    dest=/etc/dovecot/conf.d/10-auth.conf
+    line="!include auth-sql.conf.ext"
+    regexp="\!include auth\-sql\.conf\.ext"
+    state=present
+  notify: dovecot-restart
+
+- name: setup sql parameters
+  template:
+    src=dovecot-sql.conf.ext.j2
+    dest=/etc/dovecot/dovecot-sql.conf.ext
+    owner=root
+    mode=600
+  notify: dovecot-restart

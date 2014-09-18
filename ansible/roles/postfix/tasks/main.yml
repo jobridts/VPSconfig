@@ -1,0 +1,31 @@
+---
+# see also https://help.ubuntu.com/community/PostfixVirtualMailBoxClamSmtpHowto
+- name: Install packages
+  apt: name={{ item }} state=present
+  with_items:
+    - postfix
+    - postfix-mysql
+
+- name: Run postfix
+  service: name=postfix state=running enabled=yes
+
+- name: Create a virtual mailbox group
+  group:
+    name=vmail
+    gid={{ postfix_vmail_gid }}
+    system=yes
+    state=present
+
+- name: create a virtual mailbox user
+  user:
+    name={{ postfix_vmail_user }}
+    group={{ postfix_vmail_group }}
+    system=yes
+    uid={{ postfix_vmail_uid }}
+    shell=/bin/bash
+    home={{ postfix_vmail_home }}
+    state=present
+
+- name: Update config
+  template: src=main.cf.j2 dest=/etc/postfix/main.cf
+  notify: postfix-restart
