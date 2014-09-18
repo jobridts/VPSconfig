@@ -5,7 +5,7 @@ modoboa_name: mail_admin
 modoboa_mysql_database: modoboa
 modoboa_mysql_user: modoboa
 modoboa_mysql_password: modoboa
-modoboa_mysql_host: localhost
+modoboa_mysql_host: 127.0.0.1
 modoboa_mysql_port: 3306
 
 modoboa_gunicorn_backlog: 2048

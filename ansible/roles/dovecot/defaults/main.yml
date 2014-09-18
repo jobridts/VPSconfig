@@ -1,10 +1,10 @@
 ---
 dovecot_lmtp_listener: lmtp
-dovecot_lmtp_mode: 0666
+dovecot_lmtp_mode: "0666"
 dovecot_lmtp_user: dovecot
 dovecot_lmtp_group: dovecot
 
-dovecot_dict_mode: 0600
+dovecot_dict_mode: "0600"
 dovecot_dict_user: dovecot
 dovecot_dict_group: dovecot
 
