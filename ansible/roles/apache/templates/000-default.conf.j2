@@ -1,5 +1,5 @@
 {% for host in apache_hosts %}
-    {% if not host.ssl %}
+    {% if host.ssl == "no" %}
 <VirtualHost {{ host.host }}:{{ host.port }}>
     ServerName {{ host.host }}
 

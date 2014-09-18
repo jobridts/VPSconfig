@@ -1,6 +1,6 @@
 <IfModule mod_ssl.c>
 {% for host in apache_hosts %}
-    {% if not host.ssl %}
+    {% if host.ssl == "yes" %}
 
     {# _default_ is used with IP virtual hosting to catch unmatched IP addresses #}
     <VirtualHost _default_:8443>
