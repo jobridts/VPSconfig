@@ -1,0 +1,28 @@
+---
+
+
+- name:  install vsftpd
+  apt: name=vsftpd state=present
+- name: create nologin shell
+  lineinfile:
+    dest=/etc/shells
+    line="/usr/sbin/nologin"
+    state=present
+
+
+- name: create users and home dirs
+  user: 
+    name={{ item.value.name }}
+    home=/var/www/{{ item.value.dir }}/
+    shell={{ item.value.shell }}
+    password={{ item.value.pwd }}
+    state=present
+  with_dict: hosting_users
+
+
+
+- name: copy config
+  copy:
+    src=vsftpd.conf
+    dest=/etc/vsftpd.conf
+  notify: vsftpd-reload

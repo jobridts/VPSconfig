@@ -4,3 +4,20 @@ apache_hosts:
   - { host: 'localhost', port: '8443', ssl: 'yes' }
 
 modoboa_name: mail
+
+
+
+hosting_users:
+#use /usr/sbin/nologin as shell to disable shell access
+# create passwords  with:
+# python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
+  chiro:
+    name: chiro
+    pwd: $1$SomeSalt$yMpBp9G7jQT6WmEAbf3DH/
+    dir: chiroschelle.be
+    shell: /usr/sbin/nologin
+  sjatoo:
+    name: sjatoo
+    pwd: $1$SomeSalt$J4gU2PG2M5RLbybm11E6S1
+    dir: sjatoo.be
+    shell: /usr/sbin/nologin

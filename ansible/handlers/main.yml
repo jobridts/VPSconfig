@@ -26,3 +26,8 @@
   service: name=dovecot state=reloaded
 - name: dovecot-restart
   service: name=dovecot state=restarted
+
+- name: vsftpd-reload
+  service: name=vsftpd state=reloaded
+- name: vsftpd-restart
+  service: name=vsftpd state=restarted
