@@ -1,5 +1,5 @@
 ---
-dovecot_lmtp_listener: lmtp
+dovecot_lmtp_listener: /var/spool/postfix/private/dovecot-lmtp
 dovecot_lmtp_mode: "0666"
 dovecot_lmtp_user: dovecot
 dovecot_lmtp_group: dovecot

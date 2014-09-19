@@ -17,5 +17,5 @@
 protocol lmtp {
   # Space separated list of plugins to load (default is global mail_plugins).
   mail_plugins = $mail_plugins quota sieve
-  postmaster_address = postmaster@192.168.99.10.xip.io
+  postmaster_address = postmaster@{{ main_domain }}
 }
