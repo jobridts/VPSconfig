@@ -1,0 +1,24 @@
+---
+- name: Create keypair
+  tags: aws, keypair
+  ec2_key:
+    name={{ aws_prefix }}-{{ aws_region }}-key
+    region={{ aws_region }}
+    state=present
+  register: aws_key_output
+
+- name: Write the private key to a file
+  tags: aws, keypair
+  shell: echo -e '{{ item.value.private_key }}' > ~/.ssh/{{ aws_prefix }}-{{ aws_region }}-key.pem
+  with_dict: aws_key_output
+  when: item.value.private_key is defined
+
+- name: set the permission on the private key file
+  tags: aws, keypair
+  file:
+    path="~/.ssh/{{ aws_prefix }}-{{ aws_region }}-key.pem"
+    state=file
+    mode=600
+  with_dict: aws_key_output
+  when: item.value.private_key is defined
+  

@@ -45,7 +45,7 @@ relay_domains =
 
 home_mailbox = Maildir/
 mailbox_command =
-myhostname = 192.168.99.10.xip.io
+myhostname = {{ main_domain }}
 
 virtual_mailbox_domains = {{ postfix_vmail_domains | default('', True) }}
 virtual_mailbox_base= {{ postfix_vmail_home | default('', True) }}

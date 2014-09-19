@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  roles:
+  - aws_provision
+  vars:
+    # find images on http://uec-images.ubuntu.com/trusty/current/
+    - aws_image: "ami-d44c97a3"
+    - aws_region: "eu-west-1"
+    - aws_zone: "eu-west-1a"
+    - aws_allowed_ip: 0.0.0.0/0
+
+    - aws_prefix: vps
+
+    - aws_web_instance_type: "m3.medium"
+    - aws_web_count: 1

@@ -3,3 +3,7 @@ main_domain: demo.bridts.be
 mysql_root_password: root
 
 modoboa_name: mail
+
+aws_region: "eu-west-1"
+aws_zone: "eu-west-1a"
+aws_prefix: vps

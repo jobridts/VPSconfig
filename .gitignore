@@ -1,5 +1,6 @@
 # manual added#
 *.sublime-workspace
+setupenv.*sh
 
 # Created by http://www.gitignore.io
 
