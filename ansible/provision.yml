@@ -13,5 +13,5 @@
 
     - aws_prefix: vps
 
-    - aws_web_instance_type: "t2.small"
+    - aws_web_instance_type: "m3.medium"
     - aws_web_count: 1
