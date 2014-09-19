@@ -10,6 +10,6 @@
     vtype={{ item.type }}
   with_items:
     # Reinstall database for phpmyadmin?
-    - { question: 'dbconfig-reinstall', value: 'false', type: 'boolean'}
+    - { question: 'dbconfig-reinstall', value: 'true', type: 'boolean'}
     # Web server to reconfigure automatically
     - { question: 'reconfigure-webserver', value: '{{ phpmyadmin_web_server}}', type: 'multiselect'}
