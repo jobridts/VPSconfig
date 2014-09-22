@@ -1,0 +1,14 @@
+---
+dependencies:
+  - role: dovecot
+    dovecot_lmtp_listener: /var/spool/postfix/private/dovecot-lmtp
+    dovecot_lmtp_mode: 0600
+    dovecot_lmtp_user: postfix
+    dovecot_lmtp_group: postfix
+    dovecot_dict_mode: 0600
+    dovecot_dict_user: "{{ postfix_vmail_user }}"
+    dovecot_dict_group: "{{ postfix_vmail_group }}"
+    dovecot_auth_listener: /var/spool/postfix/private/auth
+    dovecot_auth_mode: 0660
+    dovecot_auth_user: postfix
+    dovecot_auth_group: postfix

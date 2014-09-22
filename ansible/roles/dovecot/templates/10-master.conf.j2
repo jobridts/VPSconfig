@@ -17,3 +17,12 @@ service dict {
     group = {{ dovecot_dict_group }}
   }
 }
+
+{# http://www.postfix.org/SASL_README.html #}
+service auth {
+  unix_listener {{ dovecot_auth_listener}} {
+    mode = {{ dovecot_auth_mode }}
+    user = {{ dovecot_auth_user }}
+    group = {{ dovecot_auth_group}}
+  }
+}

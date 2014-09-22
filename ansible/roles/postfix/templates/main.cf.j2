@@ -61,3 +61,11 @@ smtpd_recipient_restrictions =
     {% endif %}
     permit_mynetworks
     reject_unverified_recipient
+
+{# http://www.postfix.org/SASL_README.html#server_sasl_enable #}
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+broken_sasl_auth_clients = yes
+smtpd_sasl_security_options = noanonymous, noplaintext
+smtpd_sasl_tls_security_options = noanonymous

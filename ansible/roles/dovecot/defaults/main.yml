@@ -8,6 +8,11 @@ dovecot_dict_mode: "0600"
 dovecot_dict_user: dovecot
 dovecot_dict_group: dovecot
 
+dovecot_auth_listener: /var/spool/postfix/private/dovecot-lmtp
+dovecot_auth_mode: "0660"
+dovecot_auth_user: dovecot
+dovecot_auth_group: dovecot
+
 dovecot_mysql_host: localhost
 dovecot_mysql_database: dovecot
 dovecot_mysql_user: dovecot
